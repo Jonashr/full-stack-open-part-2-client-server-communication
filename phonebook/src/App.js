@@ -3,12 +3,20 @@ import Person from './Component/Person'
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', 
+      number: '12345678'
+    }
   ]) 
   const [ newName, setNewName ] = useState('')
 
+  const [ newNumber, setNewNumber] = useState('')
+
  const handleNameChange = (event) => {
     setNewName(event.target.value)
+ }
+
+ const handleNumberChange = (event) => {
+   setNewNumber(event.target.value)
  }
 
  const rows = () => 
@@ -19,13 +27,14 @@ const App = () => {
     />
   )
 
- const addName = (event) => {
+ const addPerson = (event) => {
   event.preventDefault()  
 
   const isNewName = persons.filter(person => person.name === newName)
 
   const nameObject = {
-    name: newName
+    name: newName,
+    number: newNumber
   }
 
   console.log('Name exists?', isNewName)
@@ -40,13 +49,18 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addPerson}>
         <div>
           name:
             <input value={newName}
             onChange={handleNameChange} />
-            <button type="submit">add</button>
         </div>
+        <div>
+          number:
+            <input value={newNumber}
+            onChange={handleNumberChange} />
+        </div>
+        <button type="submit">add</button>
         </form>
       <h2>Numbers</h2>
       <div>
