@@ -21,11 +21,19 @@ const App = () => {
 
  const addName = (event) => {
   event.preventDefault()  
-  console.log('button clicked', event.target);
-  console.log('new names value:', newName)
+
+  const isNewName = persons.filter(person => person.name === newName)
+
   const nameObject = {
     name: newName
   }
+
+  console.log('Name exists?', isNewName)
+
+  if(isNewName.length > 0) {
+    return alert(`${newName} is already added to the phonebook`)
+  }
+
   setPersons(persons.concat(nameObject))   
 }
 
