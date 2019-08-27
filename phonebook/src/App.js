@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './Component/Filter'
 import PersonForm from './Component/PersonForm'
 import Persons from './Component/Persons'
-import axios from 'axios'
+import personService from './Services/personService'
 
 const App = () => {
 
@@ -15,14 +15,14 @@ const App = () => {
   const [ searchName, setSearchName] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialResponse => {
+        console.log(initialResponse)
+        setPersons(initialResponse)
       })
   }, [])
+
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -49,8 +49,13 @@ const App = () => {
     if(isNewName.length > 0) {
       return alert(`${newName} is already added to the phonebook`)
     }
-  
-    setPersons(persons.concat(nameObject))   
+    
+    personService
+      .create(nameObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+    })
+    
   }
  
  const filteredPersons = persons.filter(person => person.name.includes(searchName))
