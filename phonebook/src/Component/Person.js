@@ -1,9 +1,12 @@
 import React from 'react'
 
-const Person = ({person}) => {
-    console.log('Logging person:', person)
+const Person = ({person, deletePerson}) => {
+    console.log('Logging person:', person, deletePerson)
     return(
-        <li>{person.name} {person.number}</li>
+        <div>
+                {person.name} {person.number} 
+                <button type="submit" value={person.id} onClick={deletePerson}>delete</button>
+        </div>
     )
 }
 

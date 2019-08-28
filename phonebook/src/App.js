@@ -24,7 +24,7 @@ const App = () => {
   }, [])
 
 
-  const handleNameChange = (event) => {
+ const handleNameChange = (event) => {
     setNewName(event.target.value)
  }
 
@@ -36,6 +36,21 @@ const App = () => {
    setNewNumber(event.target.value)
   }
 
+  const deletePerson = (event) => {
+    if(window.confirm('Would you like to delete this person ? ')) {
+      event.preventDefault()
+      const array = [...persons]
+      const index = array.findIndex(a => a.id == event.target.value)
+      array.splice(index, 1)
+      personService
+        .deletePerson(event.target.value)
+          .then(returnedPerson => {
+            setPersons(array)
+          })
+    }
+
+  }
+
   const addPerson = (event) => {
     event.preventDefault()  
   
@@ -44,17 +59,17 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber
-    }
-  
-    if(isNewName.length > 0) {
-      return alert(`${newName} is already added to the phonebook`)
-    }
-    
-    personService
+  }
+
+  if(isNewName.length > 0) {
+    return alert(`${newName} is already added to the phonebook`)
+  }
+
+     personService
       .create(nameObject)
         .then(returnedPerson => {
-          setPersons(persons.concat(returnedPerson))
-    })
+            setPersons(persons.concat(returnedPerson))
+      })
     
   }
  
@@ -68,7 +83,7 @@ const App = () => {
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <div>
-       <Persons filteredPersons={filteredPersons}/>
+       <Persons filteredPersons={filteredPersons} deletePerson={deletePerson}/>
       </div>
     </div>
   )
