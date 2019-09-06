@@ -17,8 +17,9 @@ const App = () => {
 
   const [ notification, setNotification] = useState('')
 
+
+
   useEffect(() => {
-    console.log("USE EFFECT")
     personService
       .getAll()
       .then(initialResponse => {
@@ -57,17 +58,14 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()  
   
-    const isNewName = persons.filter(person => person.name === newName)
-  
+    const existingPerson = persons.filter(person => person.name === newName)
+
     const nameObject = {
       name: newName,
       number: newNumber
     }
 
-    if(isNewName.length > 0) {
-      const existingPerson = persons.filter(person => person.name === newName)
-      console.log("LOG EXISTING PERSON: " , existingPerson)
-      console.log("Log data:", existingPerson[0].id)
+    if(existingPerson.length > 0) {
       if(window.confirm((`${newName} is already added to the phonebook, replace the old number with a new one ?`))) {
         personService
           .update(existingPerson[0].id, nameObject)
