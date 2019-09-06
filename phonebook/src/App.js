@@ -3,6 +3,7 @@ import Filter from './Component/Filter'
 import PersonForm from './Component/PersonForm'
 import Persons from './Component/Persons'
 import personService from './Services/personService'
+import Notification from './Component/Notification'
 
 const App = () => {
 
@@ -14,11 +15,13 @@ const App = () => {
 
   const [ searchName, setSearchName] = useState('')
 
+  const [ notification, setNotification] = useState('')
+
   useEffect(() => {
+    console.log("USE EFFECT")
     personService
       .getAll()
       .then(initialResponse => {
-        console.log(initialResponse)
         setPersons(initialResponse)
       })
   }, [])
@@ -59,18 +62,40 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber
-  }
+    }
 
-  if(isNewName.length > 0) {
-    return alert(`${newName} is already added to the phonebook`)
-  }
+    if(isNewName.length > 0) {
+      const existingPerson = persons.filter(person => person.name === newName)
+      console.log("LOG EXISTING PERSON: " , existingPerson)
+      console.log("Log data:", existingPerson[0].id)
+      if(window.confirm((`${newName} is already added to the phonebook, replace the old number with a new one ?`))) {
+        personService
+          .update(existingPerson[0].id, nameObject)
+            .then(returnedPerson => {
+              setPersons(persons.map(person => person.id !== existingPerson[0].id ? person : returnedPerson))
+            setNotification(
+              `'${nameObject.name}' was added to the phonebook`
+            )
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)    
+            
+          })
+      } 
+        return 
+    }
 
      personService
       .create(nameObject)
         .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
-      })
-    
+            setNotification(
+              `'${nameObject.name}' was added to the phonebook`
+            )
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)      
+          })
   }
  
  const filteredPersons = persons.filter(person => person.name.includes(searchName))
@@ -78,6 +103,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter persons={persons} searchName={searchName} handleSearchNameChange={handleSearchNameChange} />
       <h2>Add a new</h2>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />

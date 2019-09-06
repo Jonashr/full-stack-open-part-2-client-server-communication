@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Person = ({person, deletePerson}) => {
-    console.log('Logging person:', person, deletePerson)
     return(
         <div>
                 {person.name} {person.number} 
