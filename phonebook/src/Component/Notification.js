@@ -1,18 +1,38 @@
 import React from 'react'
 
-const Notification = ({message}) => {
-    const notificationStyle = {
+const Notification = ({message, messageType}) => {
+    const notification = {
         color: 'green',
         fontStyle: 'italic',
         fontSize: 25
     }
+
+    const warning = {
+        color: 'red',
+        fontStyle: 'italic',
+        fontSize: 25
+    }
+
+
     
-    if(message === null) {
+    if(message === null || messageType === null) {
+        console.log(message, messageType)
         return null
     }
 
+
+    if(messageType === 'WARNING') {
+        console.log('Warning style.')
+        return(<div style={warning}>
+            {message}
+        </div>
+        )
+    }
+
+    console.log('div style notification', message)
+
     return(
-        <div style={notificationStyle}>
+        <div style={notification}>
             {message}
         </div>
     )
