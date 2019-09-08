@@ -1,19 +1,9 @@
 {
   "persons": [
     {
-      "name": "sadsa22",
-      "number": "1233",
-      "id": 13
-    },
-    {
-      "name": "qwewqeqw",
-      "number": "12313",
-      "id": 14
-    },
-    {
-      "name": "1adsa",
-      "number": "13132321",
-      "id": 15
+      "name": "Bob",
+      "number": "1232131",
+      "id": 2
     }
   ]
 }

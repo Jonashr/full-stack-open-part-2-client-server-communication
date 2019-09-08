@@ -17,8 +17,6 @@ const App = () => {
 
   const [ notification, setNotification] = useState({message: '', messageType: ''})
 
-
-
   useEffect(() => {
     personService
       .getAll()
@@ -43,16 +41,17 @@ const App = () => {
   const deletePerson = (event) => {
     if(window.confirm('Would you like to delete this person ? ')) {
       event.preventDefault()
-      const array = [...persons]
-      const index = array.findIndex(a => a.id == event.target.value)
-      const person = persons[index]
-      array.splice(index, 1)
+      const newPersonArray = [...persons]
+      const indexOfDeletedPerson = persons.findIndex(p => p.name === event.target.value)
+      const personToBeDeleted = persons[indexOfDeletedPerson]
+      newPersonArray.splice(indexOfDeletedPerson, 1)
+
       personService
-        .deletePerson(event.target.value)
+        .deletePerson(personToBeDeleted.id)
           .then(returnedPerson => {
-            setPersons(array)
+            setPersons(newPersonArray)
           setNotification({
-              message:`'${person.name}' was removed from the phonebook`,
+              message:`'${personToBeDeleted.name}' was removed from the phonebook`,
               messageType: 'NOTIFICATION'}
             )
           })
@@ -66,24 +65,22 @@ const App = () => {
   
     const existingPerson = persons.filter(person => person.name === newName)
 
-    const nameObject = {
+    const newPersonObject = {
       name: newName,
       number: newNumber
     }
 
+    // Filter check if the person already exists, if so ask the user if she wishes to replace the number or not.
+    // No validation whether the number is the same as before or if it has been changed, but this could easily be added.
+
     if(existingPerson.length > 0) {
       if(window.confirm((`${newName} is already added to the phonebook, replace the old number with a new one ?`))) {
-        const ok = {
-          message: 'ok',
-          messageType: 'None'
-        }
-
         personService
-          .update(existingPerson[0].id, nameObject)
+          .update(existingPerson[0].id, newPersonObject)
             .then(returnedPerson => {
               setPersons(persons.map(person => person.id !== existingPerson[0].id ? person : returnedPerson))
             setNotification({
-               message:`${nameObject.name}' was added to the phonebook`,
+               message:`${newPersonObject.name}' was added to the phonebook`,
                messageType: 'NOTIFICIATION'
               }
             )
@@ -91,12 +88,11 @@ const App = () => {
               setNotification({ message: '', messageType: ""})
             }, 5000)    
           }).catch(Error => {
-            const warning = {
-              message:  `Information about ${nameObject.name}' was already deleted from the server`,
+  
+            setNotification({
+              message:  `Information about ${newPersonObject.name}' was already deleted from the server`,
               messageType: 'WARNING'
-            }
-            setNotification(
-              warning
+              }
             )
             setTimeout(() => {
               setNotification({ message: '', messageType: "" })
@@ -107,12 +103,14 @@ const App = () => {
         return 
     }
 
+    // Add to the list if does not exist already
+
      personService
-      .create(nameObject)
+      .create(newPersonObject)
         .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
             setNotification({
-              message:`'${nameObject.name}' was added to the phonebook`,
+              message:`'${newPersonObject.name}' was added to the phonebook`,
               messageType: 'NOTIFICATION'}
             )
             setTimeout(() => {

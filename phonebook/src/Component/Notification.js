@@ -12,8 +12,6 @@ const Notification = ({message, messageType}) => {
         fontStyle: 'italic',
         fontSize: 25
     }
-
-
     
     if(message === null || messageType === null) {
         console.log(message, messageType)
@@ -28,8 +26,6 @@ const Notification = ({message, messageType}) => {
         </div>
         )
     }
-
-    console.log('div style notification', message)
 
     return(
         <div style={notification}>
