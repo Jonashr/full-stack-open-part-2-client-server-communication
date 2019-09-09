@@ -4,7 +4,12 @@ import Country from './Country'
 const Countries = ({countries, displayedCountries, showCountry}) => {
     console.log(countries.length)
     const countriesNotDisplayed = countries.filter(c=> !displayedCountries.includes(c))
-    console.log(countriesNotDisplayed)
+
+    /* If only one country, simply displayed the detailed information without any button
+       If less than 10 countries, if a country is shown it will be added to the displayed countries.
+       When the hide button is pushed it will be removed from the list.
+       First we show all the displayed countries, then we should all countries that are not displayed that is in the countries list. 
+    */
 
     if(countries.length === 1) {
         return(

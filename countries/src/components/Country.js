@@ -1,11 +1,13 @@
 import React from 'react'
 
 const Country = ({country, toggle, showCountry, button}) => {
-    console.log('Country:', country)
     if(toggle) {
         return(
             <div>
-                <h3>{country.name}<button type="submit" value={country.name} onClick={showCountry}>hide</button></h3>
+                <h3>{country.name}   {showCountry ? <button type="submit" value={country.name} onClick={showCountry}>hide</button> :
+                 <div />
+                }
+                </h3>
                 <div>Capital: {country.capital}</div>
                 <div>Population: {country.population}</div>
                 <h2>Languages</h2>
