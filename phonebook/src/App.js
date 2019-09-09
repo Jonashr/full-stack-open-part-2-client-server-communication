@@ -25,7 +25,7 @@ const App = () => {
       .then(initialResponse => {
         setPersons(initialResponse)
       })
-  }, [persons])
+  }, [])
 
 
  const handleNameChange = (event) => {
