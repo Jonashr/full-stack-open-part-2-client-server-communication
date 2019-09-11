@@ -16,6 +16,9 @@ const App = () => {
   const [ searchName, setSearchName] = useState('')
 
   const [ notification, setNotification] = useState({message: '', messageType: ''})
+  
+  console.log(persons)
+
 
   const filteredPersons = persons.filter(person => person.name.includes(searchName))
 
@@ -23,10 +26,10 @@ const App = () => {
     personService
       .getAll()
       .then(initialResponse => {
+        console.log(initialResponse)
         setPersons(initialResponse)
       })
   }, [])
-
 
  const handleNameChange = (event) => {
     setNewName(event.target.value)
