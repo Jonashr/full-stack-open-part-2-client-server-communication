@@ -29,7 +29,7 @@ const App = () => {
         console.log(initialResponse)
         setPersons(initialResponse)
       })
-  }, [])
+  }, [persons.length])
 
  const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -74,6 +74,11 @@ const App = () => {
             setTimeout(() => {
               setNotification({message: '', messageType:''})
             }, 5000)      
+          }).catch(Error => {
+            console.log(Error.response.data)
+            setNotification({
+              message: Error.response.data.error, messageType: 'WARNING'
+            })
           })
   }
 
