@@ -1,5 +1,5 @@
 import React from 'react'
-import Course from './components/Course'
+import Courses from './components/Courses'
 
 const App = () => {
   const courses = [
@@ -46,13 +46,9 @@ const App = () => {
   }
 ]
 
-const courseRows = () => courses.map(course =>
-  <Course course={course} />
-  )
-
   return (
     <div>
-      {courseRows()}
+      <Courses courses={courses} />
     </div>
   )
 }
