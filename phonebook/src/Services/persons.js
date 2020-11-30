@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = '/persons'
+const baseUrl = '/api/persons'
 
 const getAll = async () => {
     const response = await axios.get(baseUrl)
@@ -18,8 +18,7 @@ const update = async (id, newObject) => {
 
 const deletePerson = async id => {
     const response = await axios.delete(`${baseUrl}/${id}`)
-    console.log('Delete person', response)
-    return response.data
+    return response
 }
 
 export default {

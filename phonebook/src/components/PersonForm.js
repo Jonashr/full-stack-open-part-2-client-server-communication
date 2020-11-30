@@ -20,7 +20,8 @@ const PersonForm = ({ persons, newName, newNumber, setPersons, setNotification, 
         return 
       }
     }
-
+    setNewName('')
+    setNewNumber('')
     try {
       const response = await PersonsService.create(person)
       setNotification({
@@ -35,8 +36,7 @@ const PersonForm = ({ persons, newName, newNumber, setPersons, setNotification, 
       setTimeout(() => {
        setNotification({ message: '', messageType: '' })
       }, 5000)
-      setNewName('')
-      setNewNumber('')
+
     }
   }
 
@@ -49,6 +49,8 @@ const PersonForm = ({ persons, newName, newNumber, setPersons, setNotification, 
          message:`${newPersonObject.name}' contact information was updated`,
         messageType: 'NOTIFICIATION'
       })
+      setNewName('')
+      setNewNumber('')
     } catch(error) {
       setNotification({
         message: 'Error occured when attempting to update users phone number',
