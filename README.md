@@ -1,4 +1,4 @@
-# fFll-stack-open-part-2-client-server-communication
+# Full-stack-open-part-2-client-server-communication
 
 [Part 2](https://fullstackopen.com/en/part1) of 11 in the series. 
 
