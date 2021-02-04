@@ -1,6 +1,6 @@
 # Full-stack-open-part-2-client-server-communication
 
-[Part 2](https://fullstackopen.com/en/part1) of 11 in the series. 
+[Part 2](https://fullstackopen.com/en/part2) of 11 in the series. 
 
 This part builds on the previous part and covers more React concepts such as: 
 - Rendering of collections using maps and keys.
